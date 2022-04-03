@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\RecomendationController;
+use App\Http\Controllers\TravelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +23,16 @@ Route::post('register', [AuthController::class, 'register'])->name('reg');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', [AuthController::class, 'me']);
-    // Route::get('banner', [ProductController::class, 'index']);
-    // Route::post('banner', [ProductController::class, 'index']);
-    // Route::put('banner/{item}', [ProductController::class, 'index']);
-    // Route::delete('banner/{item}', [ProductController::class, 'index']);
+    Route::get('banner', [BannerController::class, 'index']);
+    Route::post('banner', [BannerController::class, 'create']);
+    Route::put('banner/{id}', [BannerController::class, 'update']);
+    Route::delete('banner/{id}', [BannerController::class, 'delete']);
+    Route::get('recomendation', [RecomendationController::class, 'index']);
+    Route::post('recomendation', [RecomendationController::class, 'create']);
+    Route::put('recomendation/{id}', [RecomendationController::class, 'update']);
+    Route::delete('recomendation/{id}', [RecomendationController::class, 'delete']);
+    Route::get('travel', [TravelController::class, 'index']);
+    Route::post('travel', [TravelController::class, 'create']);
+    Route::put('travel/{id}', [TravelController::class, 'update']);
+    Route::delete('travel/{id}', [TravelController::class, 'delete']);
 });
