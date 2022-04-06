@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('recomendations', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content');
-            $table->int('author');
+            $table->text('content');
+            $table->string('author');
             $table->string('image');
             $table->timestamps();
         });
