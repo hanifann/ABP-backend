@@ -38,8 +38,8 @@ class TravelController extends Controller
             );
         }
 
-        $nameFile = $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('images', $nameFile, 'public');
+        $uploadedFileUrl = cloudinary()->upload($request->file('image')->getRealPath());
+        $path = $uploadedFileUrl->getSecurePath();
 
         $travel = Travel::create([
             'title' => $request->title,

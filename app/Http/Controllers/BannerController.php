@@ -7,6 +7,7 @@ use App\Models\Banner;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 
+
 class BannerController extends Controller
 {
     public function index()
@@ -34,9 +35,8 @@ class BannerController extends Controller
             );
         }
 
-        $nameFile = $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('images', $nameFile, 'public');
-
+        $uploadedFileUrl = cloudinary()->upload($request->file('image')->getRealPath());
+        $path = $uploadedFileUrl->getSecurePath();
         $banner = Banner::create([
             'title' => $request->title,
             'caption' => $request->caption,

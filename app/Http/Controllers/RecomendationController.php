@@ -34,8 +34,8 @@ class RecomendationController extends Controller
             );
         }
 
-        $nameFile = $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('images', $nameFile, 'public');
+        $uploadedFileUrl = cloudinary()->upload($request->file('image')->getRealPath());
+        $path = $uploadedFileUrl->getSecurePath();
 
         $recomendation = Recomendation::create([
             'title' => $request->title,
