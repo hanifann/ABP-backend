@@ -20,7 +20,7 @@ class RecomendationController extends Controller
 
         $validator = Validator::make($data, [
             'title' => 'required|string|max:100',
-            'content' => 'required|string|max:100',
+            'content' => 'required|string',
             'author' => 'required|string',
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
