@@ -20,17 +20,20 @@ class AuthController extends Controller
        //validator untuk melakukan pengecekan
        $validator = Validator::make($data, [
            'name' => 'required|string',
-           'password' => 'required|string',
+           'password' => 'required|string|min:6',
            'address' => 'required|string|min:6',
-           'email' => 'required|string|email',
+           'email' => 'required|string|email|unique:users,email',
            'role' => 'string'
+       ],[
+        'password.min' => 'password minimal 6',
+        'email.unique' => 'email sudah digunakan'
        ]);
        
         //cek kondisi apakah valid
        if($validator->fails()){
            return response()->json([
                'success' => false,
-               'message' => $validator->messages()
+               'message' => $validator->errors()->first()
             ],
                400
            );
@@ -58,25 +61,33 @@ class AuthController extends Controller
    {
        $credentials = $request->only('email', 'password');
 
+       // variabel messages untuk menampilkan pesan custom ketika kondisi tidak terpenuhi
+       $messages = [
+            "email.required" => "Email is required",
+            "email.email" => "Email is not valid",
+            "email.exists" => "Email doesn't exists"
+       ];
+
        //validator untuk melakukan pengecekan
        $validator = Validator::make($credentials,[
-           'email' => 'required|email',
-           'password' => 'required|string|min:6'
-       ]);
+           //tambah exists untuk mengecek apakah email atau user ada pada database
+           'email' => 'required|email|exists:users,email',
+           'password' => 'required|string'
+       ],$messages);
        //cek apakah valid
        if($validator->fails()){
            return response()->json([
                'success' => false,
-               'message' => $validator->messages()
+               'message' => $validator->messages()->first()
            ], 400);
        }
 
-       //create jwt token
        try {
+           //pengecekan apakah login berhasil
            if(! $token = auth()->attempt($credentials)){
                return response()->json([
                    'success' => false,
-                   'message' => 'login credentials invalid'
+                   'message' => 'wrong password'
                ], 400);
            }
        } catch (JWTException $e) {
@@ -89,6 +100,7 @@ class AuthController extends Controller
 
        return response()->json([
            'success' => true,
+           'data' => auth()->user(),
            'token' => $token
        ], 200);
    }

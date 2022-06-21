@@ -18,7 +18,9 @@ use App\Http\Controllers\TravelController;
 |
 */
 
-Route::post('login', [AuthController::class, 'authenticate']);
+/* tambah throttle untuk membatasi maksimal percobaan login, 
+maksimal percobaan 5x dan cooldown selama 1 menit */
+Route::post('login', [AuthController::class, 'authenticate'])->middleware("throttle:5,1");
 Route::post('register', [AuthController::class, 'register'])->name('reg');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
