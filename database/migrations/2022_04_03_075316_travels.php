@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('price');
             $table->text('description');
-            $table->dateTime('startDate');
-            $table->dateTime('endDate');
+            $table->date('startDate');
+            $table->date('endDate');
             $table->string('lodging');
             $table->string('transportation');
             $table->string('image');
