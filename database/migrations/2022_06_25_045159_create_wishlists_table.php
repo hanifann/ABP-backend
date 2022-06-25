@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            $table->integer('travel_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('travel_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('travel_id')->references('id')->on('travel');
             $table->timestamps();

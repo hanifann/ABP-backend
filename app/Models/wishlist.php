@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wishlist extends Model
 {
-    protected $table = 'wishlist';
+    protected $table = 'wishlists';
     protected $fillable = [
         'travel_id',
         'user_id',
     ];
 
-    public function produk () {
+    public function travel () {
         return $this->belongsTo('App\Models\Travel', 'travel_id');
     }
     public function user () {
