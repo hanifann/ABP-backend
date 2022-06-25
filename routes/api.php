@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\RecomendationController;
 use App\Http\Controllers\TravelController;
+use App\Http\Controllers\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('travel', [TravelController::class, 'create']);
     Route::put('travel/{id}', [TravelController::class, 'update']);
     Route::delete('travel/{id}', [TravelController::class, 'delete']);
+    Route::get('wishlist/{user_id}', [WishlistController::class, 'index']);
+    Route::post('wishlist', [WishlistController::class, 'create']);
+    Route::delete('wishlist/{id}', [WishlistController::class, 'delete']);
 });
