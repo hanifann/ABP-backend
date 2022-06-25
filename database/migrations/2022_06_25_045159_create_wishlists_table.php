@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('travel_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('produk_id')->references('id')->on('travel');
+            $table->foreign('travel_id')->references('id')->on('travel');
             $table->timestamps();
         });
     }
